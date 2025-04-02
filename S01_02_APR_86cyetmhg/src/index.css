@@ -27,6 +27,65 @@ body {
   padding: 2rem;
 }
 
+/* Search Styles */
+.search-container {
+  position: relative;
+  margin-bottom: 2rem;
+  max-width: 500px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-600);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border: 1px solid var(--gray-600);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Recipe Image Container */
+.recipe-image-container {
+  position: relative;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.favorite-button:hover {
+  transform: scale(1.1);
+}
+
+.favorite-button.active {
+  color: var(--danger-color);
+}
+
 /* Sidebar Styles */
 .sidebar {
   width: 16rem;
@@ -57,6 +116,7 @@ body {
   color: white;
   text-decoration: none;
   transition: background-color 0.2s;
+  margin-bottom: 0.5rem;
 }
 
 .nav-link:hover {
@@ -214,6 +274,17 @@ body {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-input.error {
+  border-color: var(--danger-color);
+}
+
+.error-message {
+  color: var(--danger-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 }
 
 .input-group {

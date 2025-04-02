@@ -15,6 +15,8 @@ function RecipeForm() {
     state.recipes.recipes.find(r => r.id === id)
   );
 
+  const recipes = useSelector((state: RootState) => state.recipes.recipes);
+
   const [formData, setFormData] = useState<Omit<Recipe, 'id'>>({
     title: '',
     description: '',
@@ -23,15 +25,53 @@ function RecipeForm() {
     instructions: ['']
   });
 
+  const [errors, setErrors] = useState({
+    title: '',
+    imageUrl: ''
+  });
+
   useEffect(() => {
     if (existingRecipe) {
       setFormData(existingRecipe);
     }
   }, [existingRecipe]);
 
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      title: '',
+      imageUrl: ''
+    };
+
+    // Check for unique title
+    const titleExists = recipes.some(recipe => 
+      recipe.title.toLowerCase() === formData.title.toLowerCase() && 
+      recipe.id !== id
+    );
+    if (titleExists) {
+      newErrors.title = 'A recipe with this title already exists';
+      isValid = false;
+    }
+
+    // Validate image URL
+    try {
+      new URL(formData.imageUrl);
+    } catch (e) {
+      newErrors.imageUrl = 'Please enter a valid URL';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!validateForm()) {
+      return;
+    }
+
     if (id) {
       dispatch(updateRecipe({ ...formData, id }));
     } else {
@@ -78,9 +118,10 @@ function RecipeForm() {
           type="text"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="form-input"
+          className={`form-input ${errors.title ? 'error' : ''}`}
           required
         />
+        {errors.title && <span className="error-message">{errors.title}</span>}
       </div>
 
       <div className="form-group">
@@ -97,12 +138,13 @@ function RecipeForm() {
       <div className="form-group">
         <label className="form-label">Image URL</label>
         <input
-          type="url"
+          type="text"
           value={formData.imageUrl}
           onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-          className="form-input"
+          className={`form-input ${errors.imageUrl ? 'error' : ''}`}
           required
         />
+        {errors.imageUrl && <span className="error-message">{errors.imageUrl}</span>}
       </div>
 
       <div className="form-group">

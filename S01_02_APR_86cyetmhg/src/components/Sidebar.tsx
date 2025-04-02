@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChefHat, PlusCircle, Home } from 'lucide-react';
+import { ChefHat, PlusCircle, Home, Heart } from 'lucide-react';
 
 function Sidebar() {
   const location = useLocation();
@@ -20,6 +20,11 @@ function Sidebar() {
         <Link to="/" className={`nav-link ${isActive('/')}`}>
           <Home size={20} />
           <span>Home</span>
+        </Link>
+        
+        <Link to="/favorites" className={`nav-link ${isActive('/favorites')}`}>
+          <Heart size={20} />
+          <span>Favorites</span>
         </Link>
         
         <Link to="/add-recipe" className={`nav-link ${isActive('/add-recipe')}`}>
